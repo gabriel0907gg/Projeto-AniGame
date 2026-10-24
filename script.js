@@ -1,4 +1,3 @@
-
 function searchAnime() {
   let input = document.getElementById("anime-input").value;
 
@@ -88,18 +87,20 @@ function recommendations() {
     .then((data) => {
       console.log(data);
 
+
+      const animes = data.data.Page.media;
+
       for (let i = 0; i < 15; i++) {
-        const anime = data.data.Page.media[i];
+        const anime = animes[i];
 
-        const animeCard = document.createElement("div");
+        const animeCard = document.createElement("article");
 
-        animeCard.classList.add("anime-card");
+        animeCard.classList.add("anime");
 
         animeCard.dataset.id = anime.id;
 
-        document.body.appendChild(animeCard);
-
-        const animeTitle = document.createElement("h1");
+        const animeTitle = document.createElement("h3");
+        animeTitle.classList.add("title");
 
         animeTitle.textContent = anime.title.english || anime.title.romaji;
 
@@ -107,11 +108,16 @@ function recommendations() {
 
         const animeImage = document.createElement("img");
 
+        animeImage.classList.add("anime-img");
+
         animeImage.src = anime.coverImage.large;
 
         animeImage.alt = anime.title.english || anime.title.romaji;
 
         animeCard.appendChild(animeImage);
+
+        const highlights = document.getElementById("lista-animes");
+        highlights.appendChild(animeCard);
       }
     });
 }

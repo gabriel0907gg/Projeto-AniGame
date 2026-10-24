@@ -1,94 +1,70 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AniGame - Seu mundo de animes</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <header class="topo">
-        <h1 class="logo">Ani<span>Game</span></h1>
+      <h1 class="logo">Ani<span>Game</span></h1>
 
-        <div class="pesquisa-topo">
-            <span></span>
-            <input id="anime-input" type="text" placeholder="Busque por anime, genero, personagem...">
-        </div>
+      <div class="pesquisa-topo">
+        <span></span>
+        <input
+          id="anime-input"
+          type="text"
+          placeholder="Busque por anime, genero, personagem..."
+        />
+      </div>
 
-        <div class="acoes">
-            <span></span>
-            <button>Entrar</button>
-        </div>
+      <div class="acoes">
+        <span></span>
+        <button>Entrar</button>
+      </div>
     </header>
 
     <aside class="menu-lateral">
-        <nav>
-            <a class="ativo" href="#">Início</a>
-            <a href="#">Animes</a>
-            <a href="#">Em Alta</a>
-            <a href="#">Favoritos</a>
-            <a href="#">Genêros</a>
-            <a href="#">Configurações</a>
-        </nav>
+      <nav>
+        <a class="ativo" href="#">Início</a>
+        <a href="#">Animes</a>
+        <a href="#">Em Alta</a>
+        <a href="#">Favoritos</a>
+        <a href="#">Genêros</a>
+        <a href="#">Configurações</a>
+      </nav>
     </aside>
 
     <main class="conteudo">
+      <section class="banner">
+        <div class="texo-banner">
+          <h2>Ani<span>Game</span></h2>
+          <h3>Seus animes favoritos, em um so lugar!</h3>
+          <p>
+            Explore milhares de animes, acompanhe seus favoritos<br />
+            e viva grandes histórias!
+          </p>
 
-        <section class="banner">
-            <div class="texo-banner">
-                <h2>Ani<span>Game</span></h2>
-                <h3>Seus animes favoritos, em um so lugar!</h3>
-                <p>Explore milhares de animes, acompanhe seus favoritos<br>
-                e viva grandes histórias!</p>
+          <div class="pesquisa-principal">
+            <span></span>
+            <input
+              id="anime-input"
+              type="text"
+              placeholder="Qual anime voce quer assistir?"
+            />
+            <button onclick="searchAnime()">🔍</button>
+          </div>
+        </div>
+      </section>
 
-                <div class="pesquisa-principal">
-                    <span></span>
-                    <input type="text" placeholder="Qual anime voce quer assistir?">
-                    <button>🔍</button>
-                </div>
-            </div>
-        </section>
+      <section class="destaques">
+        <h2>🔥 Em destaque</h2>
 
-        <section class="destaques">
-            <h2>🔥 Em destaque</h2>
-
-            <div class="lista-animes">
-
-                <article class="anime">
-                    <img id="img" src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/b20-9t8M4wR8YxJq.jqg" alt="Naruto">
-                    <h3 id="title">Naruto Shippuden</h3>
-                    <p>Acao . Aventura . Shounen</p>
-                </article>
-
-                <article class="anime">
-     <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/b21-3vJ9QpL2.jpg" alt="One Piece">
-    <h3>One Piece</h3>
-    <p>Acao . Aventura . Comedia</p>
-      </article>
-
-      <article class="anime">
-        <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/b101922.jpg" alt="Jujutsu Kaisen">
-        <h3>Jujutsu Kaisen</h3>
-        <p>Acao . Sobrenatural</p>
-      </article>
-
-      <article class="anime">
-        <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/b16498.jpg" alt="Attack on Titan">
-        <h3>Attack on Titan</h3>
-        <p>Acao . Drama . Fantasia</p>
-      </article>
-
-      <article class="anime">
-        <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/b101922.jpg" alt="Demon Slayer">
-        <h3>Demon Slayer</h3>
-        <p>Acao . Fantasia . Shounen</p>
-      </article>
-
-     </div>
- </section>
- 
+        <div id="lista-animes"></div>
+      </section>
     </main>
-    
-</body>
+
+    <script src="script.js"></script>
+  </body>
 </html>

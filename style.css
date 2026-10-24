@@ -195,7 +195,7 @@ button {
 }
 
 
-.lista-animes {
+#lista-animes {
     display: flex;
     gap: 16px;
     overflow-x: auto;
@@ -205,16 +205,16 @@ button {
     scroll-snap-type: x mandatory;
 }
 
-.lista-animes::-webkit-scrollbar {
-    height: 8px;
+#lista-animes::-webkit-scrollbar {
+   height: 8px;
 }
 
-.lista-animes::-webkit-scrollbar-track {
+#lista-animes::-webkit-scrollbar-track {
     background: #202030;
     border-radius: 10px;
 }
 
-.lista-animes::-webkit-scrollbar-thumb {
+#lista-animes::-webkit-scrollbar-thumb {
     background: #ff2538;
     border-radius: 10px;
 }
@@ -235,7 +235,7 @@ button {
     border-color: #ff2538;
 }
 
-.anime img {
+.anime-img {
     width: 100%;
     height: 220px;
     object-fit: cover;
@@ -243,7 +243,7 @@ button {
     display: block;
 }
 
-.anime h3 {
+.title {
     font-size: 14px;
     margin: 10px 0 7px;
 }
@@ -296,7 +296,7 @@ button {
         font-size: 44px;
     }
 
-    .lista-animes {
+    #lista-animes {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
