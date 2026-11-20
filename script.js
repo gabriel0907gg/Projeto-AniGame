@@ -1,9 +1,35 @@
+const campoPesquisa = document.getElementById("anime-input");
+
+let temporizador;
+
+campoPesquisa.addEventListener("input", () => {
+  clearTimeout(temporizador);
+
+  temporizador = setTimeout(() => {
+    searchAnime();
+  }, 400);
+});
+
 function searchAnime() {
-  let input = document.getElementById("anime-input").value;
+  let input = document.getElementById("anime-input").value.trim();
+
+  const home = document.getElementById("home");
+  const resultados = document.getElementById("resultados-pesquisa");
+
+  if (input === "") {
+    home.hidden = false;
+    resultados.hidden = true;
+    return;
+  }
+
+  home.hidden = true;
+  resultados.hidden = false;
 
   const query = `
-    query {
-        Media(search: "${input}", type: ANIME) {
+    query ($nome: String) {
+    Page(page: 1, perPage: 20) {
+        media(search: $nome, type: ANIME) {
+            id
             title {
                 romaji
                 english
@@ -13,6 +39,7 @@ function searchAnime() {
             }
         }
     }
+}
 `;
 
   fetch("https://graphql.anilist.co", {
@@ -24,18 +51,50 @@ function searchAnime() {
 
     body: JSON.stringify({
       query: query,
+      variables: {
+        nome: input,
+      },
     }),
   })
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
 
-      const anime = data.data.Media;
+      const animes = data.data.Page.media;
 
-      document.querySelector("#title").textContent =
-        anime.title.english || anime.title.romaji;
+      const lista = document.getElementById("lista-resultados");
+      lista.innerHTML = "";
 
-      document.querySelector("#img").src = anime.coverImage.large;
+      animes.forEach((anime) => {
+        const animeCard = document.createElement("article");
+
+        animeCard.classList.add("anime");
+
+        animeCard.dataset.id = anime.id;
+
+        const animeTitle = document.createElement("h3");
+        animeTitle.classList.add("title");
+
+        animeTitle.textContent = anime.title.english || anime.title.romaji;
+
+        animeCard.appendChild(animeTitle);
+
+        const animeImage = document.createElement("img");
+
+        animeImage.classList.add("anime-img");
+
+        animeImage.src = anime.coverImage.large;
+
+        animeImage.alt = anime.title.english || anime.title.romaji;
+
+        animeCard.addEventListener("click", () => {
+          window.location.href = `PagCard.html?tipo=anime&id=${anime.id}`;
+        });
+
+        animeCard.appendChild(animeImage);
+
+        lista.appendChild(animeCard);
+      });
     });
 }
 
@@ -87,10 +146,9 @@ function recommendations() {
     .then((data) => {
       console.log(data);
 
-
       const animes = data.data.Page.media;
 
-      for (let i = 0; i < 15; i++) {
+      for (let i = 0; i < animes.length; i++) {
         const anime = animes[i];
 
         const animeCard = document.createElement("article");
@@ -113,6 +171,10 @@ function recommendations() {
         animeImage.src = anime.coverImage.large;
 
         animeImage.alt = anime.title.english || anime.title.romaji;
+
+        animeCard.addEventListener("click", () => {
+          window.location.href = `PagCard.html?tipo=anime&id=${anime.id}`;
+        });
 
         animeCard.appendChild(animeImage);
 
