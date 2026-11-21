@@ -33,7 +33,62 @@ $token = $dados["access_token"];
 
 $url = "https://api.igdb.com/v4/games";
 
-$consulta = 'fields id,name,summary,cover.image_id; limit 100;';
+$limit = max(1, min((int) ($_GET["limit"] ?? 20), 100));
+
+$offset = max(0, (int) ($_GET["offset"] ?? 0));
+
+$tipos = [
+    "popular" => "total_rating_count desc",
+    "avaliados" => "total_rating desc",
+    "recentes" => "first_release_date desc"
+];
+
+$tipo = $_GET["tipo"] ?? "popular";
+
+$pesquisa = trim($_GET["q"] ?? "");
+
+$ordenacao = $tipos[$tipo] ?? $tipos["popular"];
+
+$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
+
+if (isset($_GET["id"]) && ($id === false || $id === null || $id < 1)) {
+    http_response_code((400));
+    header("Content-Type; application/json; carset=utf-8");
+    echo json_encode(["error" => "ID inválido"]);
+    exit;
+}
+
+if ($id !== null && $id !== false) {
+    $consulta = "
+        fields id,name,summary,storyline,cover.image_id,
+               genres.name,first_release_date,total_rating;
+        where id = $id;
+        limit 1;
+    ";
+} else {
+    $consulta = "
+        fields id,name,summary,cover.image_id;
+        where cover != null;
+        sort $ordenacao;
+        limit $limit;
+        offset $offset;
+    ";
+}
+
+if ($pesquisa !== "") {
+    $pesquisa = str_replace(
+        ["\\", '"', "\r", "\n"],
+        ["\\\\", '\\"', " ", " "],
+        $pesquisa
+    );
+
+    $consulta = "
+        search \"$pesquisa\";
+        fields id,name,summary,cover.image_id;
+        where cover != null;
+        limit $limit;
+    ";
+}
 
 $curl = curl_init($url);
 

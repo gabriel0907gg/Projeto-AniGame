@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Animes - AniGame</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Jogos - AniGame</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <header class="topo">
@@ -22,7 +22,7 @@
 
       <div class="acoes">
         <span></span>
-        <button>Entrar</button>
+        <a href="Login.html"><button>Login</button></a>
       </div>
     </header>
 
@@ -31,10 +31,10 @@
         <a class="ativo" href="index.html">Início</a>
         <a href="Animes.html">Animes</a>
         <a href="Games.html">Jogos</a>
-        <a href="#">Em Alta</a>
-        <a href="#">Favoritos</a>
-        <a href="#">Genêros</a>
-        <a href="#">Configurações</a>
+        <a href="popular.html">Em Alta</a>
+        <a href="favorite.html">Favoritos</a>
+        <a href="genres.html">Genêros</a>
+        <a href="settings.html">Configurações</a>
       </nav>
     </aside>
 
@@ -42,12 +42,13 @@
       <div id="home">
         <section class="destaques">
           <div id="lista-games"></div>
+          <div id="observador-jogos"></div>
         </section>
       </div>
 
       <section id="resultados-pesquisa-games" hidden>
         <h2>Resultados da pesquisa</h2>
-        <div id="lista-resultados"> </div>
+        <div id="lista-resultados"></div>
       </section>
     </main>
 
