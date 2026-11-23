@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width,initial-scale=1" name="viewport" />
+    <title>Conta - AniGame</title>
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="topo">
+      <a class="logo" href="index.html">Ani<span>Game</span></a>
+      <form class="pesquisa-topo" id="busca-global">
+        <input
+          aria-label="Pesquisar"
+          id="anime-input"
+          placeholder="Pesquisar animes ou jogos"
+          type="search"
+        /><select aria-label="Categoria" id="categoria-busca">
+          <option value="anime">Animes</option>
+          <option value="game">Jogos</option></select
+        ><button type="submit">Buscar</button>
+      </form>
+      <div class="acoes"><a data-auth-link="" href="Login.html">Login</a></div>
+    </header>
+    <aside class="menu-lateral">
+      <nav aria-label="Menu principal">
+        <a href="index.html">Início</a><a href="Animes.html">Animes</a
+        ><a href="Games.html">Jogos</a><a href="popular.html">Em alta</a
+        ><a href="favorite.html">Favoritos</a><a href="genres.html">Gêneros</a
+        ><a aria-current="page" class="ativo" href="settings.html"
+          >Configurações</a
+        >
+      </nav>
+    </aside>
+    <main class="conteudo">
+      <section class="painel">
+        <h1>Minha conta</h1>
+        <p id="estado">Carregando...</p>
+        <button hidden="" id="sair">Sair da conta</button>
+        <p><a href="favorite.html">Meus favoritos</a></p>
+      </section>
+    </main>
+    <script src="auth.js"></script>
+    <script>
+      sessaoPronta.then(() => {
+        document.getElementById("estado").textContent = sessao.logado
+          ? "Conectado como " + sessao.nome
+          : "Você não está conectado.";
+        document.getElementById("sair").hidden = !sessao.logado;
+      });
+      document.getElementById("sair").onclick = async () => {
+        await enviarApi("logout");
+        location.href = "index.html";
+      };
+    </script>
+    <script src="layout.js"></script>
+  </body>
+</html>

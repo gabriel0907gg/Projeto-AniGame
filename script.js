@@ -6,7 +6,7 @@ campoPesquisa.addEventListener("input", () => {
   clearTimeout(temporizador);
 
   temporizador = setTimeout(() => {
-    searchAnime();
+    if (document.getElementById("categoria-busca").value === "anime") searchAnime();
   }, 400);
 });
 

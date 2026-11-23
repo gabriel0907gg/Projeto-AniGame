@@ -1,19 +1,63 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width,initial-scale=1" name="viewport" />
     <title>Login - AniGame</title>
-</head>
-<body>
-    <form action="login.php" method="post">
-        <label for="username">Usuário:</label>
-        <input type="text" id="username" name="username" required><br><br>
-
-        <label for="password">Senha:</label>
-        <input type="password" id="password" name="password" required><br><br>
-
-        <input type="submit" value="Entrar">
-    </form>
-</body>
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="topo">
+      <a class="logo" href="index.html">Ani<span>Game</span></a>
+      <form class="pesquisa-topo" id="busca-global">
+        <input
+          aria-label="Pesquisar"
+          id="anime-input"
+          placeholder="Pesquisar animes ou jogos"
+          type="search"
+        /><select aria-label="Categoria" id="categoria-busca">
+          <option value="anime">Animes</option>
+          <option value="game">Jogos</option></select
+        ><button type="submit">Buscar</button>
+      </form>
+      <div class="acoes"><a data-auth-link="" href="Login.html">Login</a></div>
+    </header>
+    <aside class="menu-lateral">
+      <nav aria-label="Menu principal">
+        <a href="index.html">Início</a><a href="Animes.html">Animes</a
+        ><a href="Games.html">Jogos</a><a href="popular.html">Em alta</a
+        ><a href="favorite.html">Favoritos</a><a href="genres.html">Gêneros</a
+        ><a href="settings.html">Configurações</a>
+      </nav>
+    </aside>
+    <main class="conteudo auth-page">
+      <section class="painel auth-panel">
+        <h1 id="titulo-auth">Entrar</h1>
+        <form data-modo="login" id="form-auth">
+          <div hidden="" id="campo-nome">
+            <label>Nome <input id="nome" maxlength="100" name="nome" /></label>
+          </div>
+          <p>
+            <label
+              >E-mail
+              <input maxlength="150" name="email" required="" type="email"
+            /></label>
+          </p>
+          <p>
+            <label
+              >Senha
+              <input minlength="8" name="senha" required="" type="password"
+            /></label>
+          </p>
+          <button id="enviar">Entrar</button>
+        </form>
+        <p id="mensagem" role="status"></p>
+        <button id="alternar" type="button">Criar conta</button>
+        <p><a href="index.html">Voltar ao início</a></p>
+      </section>
+    </main>
+    <script src="login.js"></script>
+    <script src="auth.js"></script>
+    <script src="layout.js"></script>
+  </body>
 </html>

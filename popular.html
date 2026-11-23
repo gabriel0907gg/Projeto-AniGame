@@ -1,76 +1,47 @@
 <!doctype html>
-<html lang="pt">
+<html lang="pt-br">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AniGame - Seu mundo de animes</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="utf-8" />
+    <meta content="width=device-width,initial-scale=1" name="viewport" />
+    <title>Em alta - AniGame</title>
+    <link href="style.css" rel="stylesheet" />
   </head>
   <body>
     <header class="topo">
-      <h1 class="logo">Ani<span>Game</span></h1>
-
-      <div class="pesquisa-topo">
-        <span></span>
+      <a class="logo" href="index.html">Ani<span>Game</span></a>
+      <form class="pesquisa-topo" id="busca-global">
         <input
+          aria-label="Pesquisar"
           id="anime-input"
-          type="text"
-          placeholder="Qual anime / jogo você quer achar?"
-        />
-        <button onclick="searchAnime()">🔍</button>
-      </div>
-
-      <div class="acoes">
-        <span></span>
-        <a href="Login.html"><button>Login</button></a>
-      </div>
+          placeholder="Pesquisar animes ou jogos"
+          type="search"
+        /><select aria-label="Categoria" id="categoria-busca">
+          <option value="anime">Animes</option>
+          <option value="game">Jogos</option></select
+        ><button type="submit">Buscar</button>
+      </form>
+      <div class="acoes"><a data-auth-link="" href="Login.html">Login</a></div>
     </header>
-
     <aside class="menu-lateral">
-      <nav>
-        <a class="ativo" href="index.html">Início</a>
-        <a href="Animes.html">Animes</a>
-        <a href="Games.html">Jogos</a>
-        <a href="popular.html">Em Alta</a>
-        <a href="favorite.html">Favoritos</a>
-        <a href="genres.html">Genêros</a>
-        <a href="settings.html">Configurações</a>
+      <nav aria-label="Menu principal">
+        <a href="index.html">Início</a><a href="Animes.html">Animes</a
+        ><a href="Games.html">Jogos</a
+        ><a aria-current="page" class="ativo" href="popular.html">Em alta</a
+        ><a href="favorite.html">Favoritos</a><a href="genres.html">Gêneros</a
+        ><a href="settings.html">Configurações</a>
       </nav>
     </aside>
-
     <main class="conteudo">
-      <div id="home">
-        <section class="banner">
-          <div class="texo-banner">
-            <h2>Ani<span>Game</span></h2>
-            <h3>Seus animes favoritos, em um so lugar!</h3>
-            <p>
-              Explore milhares de animes, acompanhe seus favoritos<br />
-              e viva grandes histórias!
-            </p>
-          </div>
-        </section>
-
-        <section class="destaques">
-          <h2>🔥 Animes em destaque 💻</h2>
-
-          <div id="lista-animes" class="listinha"></div>
-        </section>
-
-        <section class="destaques">
-          <h2>🔥 Jogos em destaque 🎮</h2>
-
-          <div id="lista-games" class="listinha"></div>
-        </section>
-      </div>
-
-      <section id="resultados-pesquisa" hidden>
-        <h2>Resultados da pesquisa</h2>
-        <div id="lista-resultados"></div>
-      </section>
+      <h1>Em alta</h1>
+      <h2>Animes populares</h2>
+      <div class="grade-midia" id="pop-animes"></div>
+      <h2>Jogos populares</h2>
+      <div class="grade-midia" id="pop-games"></div>
+      <p id="erro-pop"></p>
     </main>
-
-    <script src="script.js"></script>
-    <script src="games.js"></script>
+    <script src="auth.js"></script>
+    <script src="midia.js"></script>
+    <script src="popular.js"></script>
+    <script src="layout.js"></script>
   </body>
 </html>

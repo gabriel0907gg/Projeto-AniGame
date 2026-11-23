@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width,initial-scale=1" name="viewport" />
+    <title>Gêneros - AniGame</title>
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="topo">
+      <a class="logo" href="index.html">Ani<span>Game</span></a>
+      <form class="pesquisa-topo" id="busca-global">
+        <input
+          aria-label="Pesquisar"
+          id="anime-input"
+          placeholder="Pesquisar animes ou jogos"
+          type="search"
+        /><select aria-label="Categoria" id="categoria-busca">
+          <option value="anime">Animes</option>
+          <option value="game">Jogos</option></select
+        ><button type="submit">Buscar</button>
+      </form>
+      <div class="acoes"><a data-auth-link="" href="Login.html">Login</a></div>
+    </header>
+    <aside class="menu-lateral">
+      <nav aria-label="Menu principal">
+        <a href="index.html">Início</a><a href="Animes.html">Animes</a
+        ><a href="Games.html">Jogos</a><a href="popular.html">Em alta</a
+        ><a href="favorite.html">Favoritos</a
+        ><a aria-current="page" class="ativo" href="genres.html">Gêneros</a
+        ><a href="settings.html">Configurações</a>
+      </nav>
+    </aside>
+    <main class="conteudo">
+      <h1>Explorar por gênero</h1>
+      <div class="filtros">
+        <label
+          >Categoria
+          <select id="tipo-genero">
+            <option value="anime">Animes</option>
+            <option value="game">Jogos</option>
+          </select></label
+        ><label
+          >Gênero
+          <select id="genero"></select></label
+        ><button id="filtrar">Pesquisar</button>
+      </div>
+      <p id="mensagem"></p>
+      <div class="grade-midia" id="lista-generos"></div>
+    </main>
+    <script src="auth.js"></script>
+    <script src="midia.js"></script>
+    <script src="genres.js"></script>
+    <script src="layout.js"></script>
+  </body>
+</html>

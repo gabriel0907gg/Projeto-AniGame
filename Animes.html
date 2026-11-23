@@ -1,56 +1,57 @@
 <!doctype html>
+
 <html lang="pt-br">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Animes - AniGame</title>
-    <link rel="stylesheet" href="style.css">
+    <link href="style.css" rel="stylesheet" />
   </head>
   <body>
     <header class="topo">
-      <h1 class="logo">Ani<span>Game</span></h1>
-
-      <div class="pesquisa-topo">
-        <span></span>
+      <a class="logo" href="index.html">Ani<span>Game</span></a>
+      <form class="pesquisa-topo" id="busca-global">
         <input
+          aria-label="Pesquisar"
           id="anime-input"
-          type="text"
-          placeholder="Qual anime você quer achar?"
-        />
-        <button onclick="searchAnime()">🔍</button>
-      </div>
-
-      <div class="acoes">
-        <span></span>
-        <a href="Login.html"><button>Login</button></a>
-      </div>
+          placeholder="Pesquisar animes ou jogos"
+          type="search"
+        /><select aria-label="Categoria" id="categoria-busca">
+          <option value="anime">Animes</option>
+          <option value="game">Jogos</option></select
+        ><button type="submit">Buscar</button>
+      </form>
+      <div class="acoes"><a data-auth-link="" href="Login.html">Login</a></div>
     </header>
-
     <aside class="menu-lateral">
-      <nav>
-        <a class="ativo" href="index.html">Início</a>
-        <a href="Animes.html">Animes</a>
-        <a href="Games.html">Jogos</a>
-        <a href="popular.html">Em Alta</a>
-        <a href="favorite.html">Favoritos</a>
-        <a href="genres.html">Genêros</a>
-        <a href="settings.html">Configurações</a>
+      <nav aria-label="Menu principal">
+        <a href="index.html">Início</a
+        ><a aria-current="page" class="ativo" href="Animes.html">Animes</a
+        ><a href="Games.html">Jogos</a><a href="popular.html">Em alta</a
+        ><a href="favorite.html">Favoritos</a><a href="genres.html">Gêneros</a
+        ><a href="settings.html">Configurações</a>
       </nav>
     </aside>
-
     <main class="conteudo">
+      <h1>Explorar animes</h1>
       <div id="home">
         <section class="destaques">
           <div id="lista-animes"></div>
+
+          <button id="carregar-mais-animes" onclick="recommendations()">
+            Carregar mais
+          </button>
+
+          <div id="observador-animes"></div>
         </section>
       </div>
-
-      <section id="resultados-pesquisa-anime" hidden>
+      <section hidden="" id="resultados-pesquisa-anime">
         <h2>Resultados da pesquisa</h2>
-        <div id="lista-resultados"> </div>
+        <div id="lista-resultados"></div>
       </section>
     </main>
-
     <script src="anime.js"></script>
+    <script src="auth.js"></script>
+    <script src="layout.js"></script>
   </body>
 </html>

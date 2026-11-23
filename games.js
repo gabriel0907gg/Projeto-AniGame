@@ -8,6 +8,7 @@ let temporizador;
 
 campoPesquisa.addEventListener("input", () => {
   clearTimeout(temporizador);
+  if (document.getElementById("categoria-busca").value !== "game") return;
 
   temporizador = setTimeout(() => {
     searchGames();
@@ -74,8 +75,13 @@ async function buscarJogos() {
 
     const botao = document.getElementById("carregar-mais");
 
-    if (botao) {
-      botao.hidden = fimDosJogos;
+    botao.hidden = fimDosJogos;
+
+    if (!fimDosJogos) {
+      observador.unobserve(elementoObservado);
+      observador.observe(elementoObservado);
+    } else {
+      observador.disconnect();
     }
   }
 }
@@ -85,6 +91,11 @@ buscarJogos();
 async function searchGames() {
   const pesquisa = document.getElementById("game-input").value.trim();
 
+  if (!pesquisa) {
+    document.getElementById("home").hidden = false;
+    document.getElementById("resultados-pesquisa-games").hidden = true;
+    return;
+  }
   const resposta = await fetch(`games.php?q=${encodeURIComponent(pesquisa)}`);
 
   if (!resposta.ok) {
@@ -135,13 +146,12 @@ const elementoObservado = document.getElementById("observador-jogos");
 
 const observador = new IntersectionObserver(
   (entradas) => {
-    const entrada = entradas[0];
-
-    if (entrada.isIntersecting && !document.getElementById("home").hidden) {
-      buscarJogos();
-    }
-
-    if (entrada.isIntersecting) {
+    if (
+      entradas[0].isIntersecting &&
+      !carregando &&
+      !fimDosJogos &&
+      !document.getElementById("home").hidden
+    ) {
       buscarJogos();
     }
   },

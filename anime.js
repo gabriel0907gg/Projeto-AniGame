@@ -4,6 +4,7 @@ let temporizador;
 
 campoPesquisa.addEventListener("input", () => {
   clearTimeout(temporizador);
+  if (document.getElementById("categoria-busca").value !== "anime") return;
 
   temporizador = setTimeout(() => {
     searchAnime();
@@ -101,85 +102,132 @@ function searchAnime() {
 recommendations();
 
 function recommendations() {
-  const query = `
-        query {
+  let pagina = 1;
+  let carregando = false;
+  let fimDosAnimes = false;
 
+  async function recommendations() {
+    if (carregando || fimDosAnimes) return;
 
+    carregando = true;
 
+    const botao = document.getElementById("carregar-mais-animes");
 
+    botao.disabled = true;
+    botao.textContent = "Carregando...";
 
-
-
-
-
-        
-            Page(page: 1, perPage: 15) {
-                media(
-                    type: ANIME,
-                    sort: POPULARITY_DESC
-                ) {
-                    id
-                    title {
-                        romaji
-                        english
-                    }
-                    coverImage {
-                        large
-                    }
-                }
-            }
+    const query = `
+    query ($pagina: Int) {
+      Page(page: $pagina, perPage: 20) {
+        pageInfo {
+          hasNextPage
         }
-    `;
+        media(type: ANIME, sort: POPULARITY_DESC) {
+          id
+          title {
+            romaji
+            english
+          }
+          coverImage {
+            large
+          }
+        }
+      }
+    }
+  `;
 
-  fetch("https://graphql.anilist.co", {
-    method: "POST",
+    let sucesso = false;
 
-    headers: {
-      "Content-Type": "application/json",
-    },
+    try {
+      const resposta = await fetch("https://graphql.anilist.co", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: query,
+          variables: {
+            pagina: pagina,
+          },
+        }),
+      });
 
-    body: JSON.stringify({
-      query: query,
-    }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
+      if (!resposta.ok) {
+        throw new Error("Erro ao carregar animes");
+      }
 
-      const animes = data.data.Page.media;
+      const dados = await resposta.json();
 
-      for (let i = 0; i < animes.length; i++) {
-        const anime = animes[i];
+      const animes = dados.data.Page.media;
+      const lista = document.getElementById("lista-animes");
 
-        const animeCard = document.createElement("article");
+      animes.forEach((anime) => {
+        const card = document.createElement("article");
+        card.classList.add("anime");
 
-        animeCard.classList.add("anime");
+        const titulo = document.createElement("h3");
+        titulo.classList.add("title");
 
-        animeCard.dataset.id = anime.id;
+        titulo.textContent = anime.title.english || anime.title.romaji;
 
-        const animeTitle = document.createElement("h3");
-        animeTitle.classList.add("title");
+        const imagem = document.createElement("img");
+        imagem.classList.add("anime-img");
 
-        animeTitle.textContent = anime.title.english || anime.title.romaji;
+        imagem.src = anime.coverImage.large;
+        imagem.alt = titulo.textContent;
 
-        animeCard.appendChild(animeTitle);
+        card.appendChild(titulo);
+        card.appendChild(imagem);
 
-        const animeImage = document.createElement("img");
-
-        animeImage.classList.add("anime-img");
-
-        animeImage.src = anime.coverImage.large;
-
-        animeImage.alt = anime.title.english || anime.title.romaji;
-
-        animeCard.addEventListener("click", () => {
+        card.addEventListener("click", () => {
           window.location.href = `PagCard.html?tipo=anime&id=${anime.id}`;
         });
 
-        animeCard.appendChild(animeImage);
+        lista.appendChild(card);
+      });
 
-        const highlights = document.getElementById("lista-animes");
-        highlights.appendChild(animeCard);
+      fimDosAnimes = !dados.data.Page.pageInfo.hasNextPage;
+
+      pagina++;
+      sucesso = true;
+    } catch (erro) {
+      console.error("Erro ao carregar animes:", erro);
+      observador.disconnect();
+    } finally {
+      carregando = false;
+
+      botao.disabled = false;
+      botao.textContent = "Carregar mais";
+      botao.hidden = fimDosAnimes;
+
+      if (sucesso && !fimDosAnimes) {
+        observador.unobserve(elementoObservado);
+        observador.observe(elementoObservado);
+      } else {
+        observador.disconnect();
       }
-    });
+    }
+  }
+
+  const elementoObservado = document.getElementById("observador-animes");
+
+  const observador = new IntersectionObserver(
+    (entradas) => {
+      if (
+        entradas[0].isIntersecting &&
+        !carregando &&
+        !fimDosAnimes &&
+        !document.getElementById("home").hidden
+      ) {
+        recommendations();
+      }
+    },
+    {
+      rootMargin: "200px",
+    },
+  );
+
+  observador.observe(elementoObservado);
+
+  recommendations();
 }

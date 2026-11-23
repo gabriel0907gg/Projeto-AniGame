@@ -129,7 +129,6 @@ async function buscarDetalhesGame(id) {
     dataMidia.textContent = "Data desconhecida";
   }
 
-  console.log(data);
 }
 
 if (tipo === "anime" && id) {
