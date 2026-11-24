@@ -1,17 +1,19 @@
-<?php
-$servidor = "localhost";
-$usuario = "root";
-$senha = "";
-$banco = "anigame_db";
+conexao.php: <?php
 
-// Cria a conexão
-$conexao = new mysqli($servidor, $usuario, $senha, $banco);
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-// Verifica se deu erro na conexão
-if ($conexao->connect_error) {
-    die("Falha na conexão: " . $conexao->connect_error);
-}
+try {
 
-// Opcional: define o conjunto de caracteres para aceitar acentos (UTF-8)
-$conexao->set_charset("utf8");
-?>
+$conexao = new mysqli('localhost', 'root', '', 'anigame_db');
+
+$conexao->set_charset('utf8mb4');
+
+} catch (mysqli_sql_exception $e) {
+
+error_log($e->getMessage());
+
+http_response_code(500);
+
+exit('Não foi possível conectar ao banco de dados.');
+
+} 
